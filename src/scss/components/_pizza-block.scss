@@ -4,9 +4,10 @@
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
+  margin-right: 33px;
 
 &__wrapper{
-  display: flex;
+  display: inline-flex;
   justify-content: center;
 }
 

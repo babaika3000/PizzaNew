@@ -1,14 +1,13 @@
 import React from 'react';
 import Logo from '../assets/img/pizza-logo.svg'
 import {NavLink} from "react-router-dom";
-import Search from "./Serch";
+import Search from "./Pages/PizzaBlock/Serch/Serch";
 
 
 
 const Header = () => {
     return (
         <div className="header">
-
             <div className="container">
                 <div className="header__logo">
                     <img width="38" src={Logo} alt="Pizza logo" />

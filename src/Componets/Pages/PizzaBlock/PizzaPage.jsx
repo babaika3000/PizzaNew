@@ -24,7 +24,7 @@ const Home = ()=> {
         setIsLoading(true)
     async function pizzaList() {
         try{
-            const response = await axios(`${url} + ${categoriesId > 0 ? `category=${categoriesId}` 
+            const response = await axios(`${url} + ${categoriesId > 0 ? `filter=${categoriesId}` 
                 :``}&sortBy=${sortId.propertyValue}&order=desc`)
             setItemesList(response.data)
             setIsLoading(false)
