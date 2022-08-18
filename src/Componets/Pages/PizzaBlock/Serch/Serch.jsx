@@ -10,7 +10,6 @@ const Search = () => {
   const searchPizza = useSelector(store => store.filtersSlice.searchPizza)
   const inputRef = useRef()
 
-  console.log('@@@@', searchPizza);
   const changeInputValue = React.useCallback(
     debounce((str) => dispatch(setSearchPizza(str)),
           1300),
