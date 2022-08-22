@@ -5,7 +5,8 @@ export const filtersSlice = createSlice({
     initialState: {
         sort: {name:'популярности', propertyValue:'rating'},
         categorei: 0,
-        searchPizza:''
+        searchPizza:'',
+        pageCount: 1,
     },
     reducers: {
         setSortId: (state, action) => {
@@ -19,9 +20,13 @@ export const filtersSlice = createSlice({
             state.searchPizza = action.payload
 
         },
+        setPageCount: (state, action) => {
+            state.pageCount = action.payload
+
+        },
     }
 })
 
-export const { setSortId, setCategories , setSearchPizza } = filtersSlice.actions
+export const { setSortId, setCategories , setSearchPizza,setPageCount } = filtersSlice.actions
 
 export default filtersSlice.reducer
