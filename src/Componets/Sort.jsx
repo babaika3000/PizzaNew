@@ -21,7 +21,6 @@ const Sort = () => {
         setIsOpen(false)
     }
     return (
-        <div className='content'>
         <div className="sort">
             <div className="sort__label">
                 <svg
@@ -47,7 +46,6 @@ const Sort = () => {
                 </ul>
             </div>}
 
-        </div>
         </div>
     );
 };

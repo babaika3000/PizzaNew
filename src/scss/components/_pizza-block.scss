@@ -3,13 +3,18 @@
 .pizza-block {
   width: 280px;
   text-align: center;
+  margin-right: 30px;
   margin-bottom: 65px;
-  margin-right: 33px;
+  transition: all 0.2s ease-in-out;
 
-&__wrapper{
-  display: inline-flex;
-  justify-content: center;
-}
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &__wrapper {
+    display: inline-flex;
+    justify-content: space-between;
+  }
 
   &__image {
     width: 260px;
