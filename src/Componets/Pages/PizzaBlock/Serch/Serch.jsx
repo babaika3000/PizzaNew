@@ -7,7 +7,6 @@ import classes from './Serch.module.scss'
 const Search = () => {
   const [value, setValue] = useState('')
   const dispatch = useDispatch();
-  const searchPizza = useSelector(store => store.filtersSlice.searchPizza)
   const inputRef = useRef()
 
   const changeInputValue = React.useCallback(
