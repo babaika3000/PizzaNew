@@ -2,13 +2,14 @@ import React from 'react';
 import {setSortId} from "../redux/redusers/filtersSliceReduer";
 import {useDispatch, useSelector} from "react-redux";
 
+export const list =  [{name:'популярности', propertyValue:'rating'},
+    {name:'цене', propertyValue:'price'},
+    {name:'алфавиту', propertyValue:'title'},
+]
 const Sort = () => {
 
     const [isOpen, setIsOpen] = React.useState(false)
-    const list =  [{name:'популярности', propertyValue:'rating'},
-    {name:'цене', propertyValue:'price'},
-    {name:'алфавиту', propertyValue:'title'},
-        ]
+
 
 
     const dispatch = useDispatch()
