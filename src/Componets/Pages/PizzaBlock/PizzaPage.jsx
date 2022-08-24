@@ -60,7 +60,8 @@ const Home = () => {
       const params = qs.parse(window.location.search.substring(1))
 
       const sort = list.find(obj => obj.propertyValue === params.propertyValue)
-      dispatch(setFilters({
+      dispatch(
+        setFilters({
         ...params,
         sort
       }))
