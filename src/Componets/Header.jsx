@@ -2,10 +2,12 @@ import React from 'react';
 import Logo from '../assets/img/pizza-logo.svg'
 import {NavLink} from "react-router-dom";
 import Search from "./Pages/PizzaBlock/Serch/Serch";
-
+import {useSelector} from "react-redux";
 
 
 const Header = () => {
+    const {totalPrice, items} = useSelector((state)=> state.cartSlice)
+    const pizzaCount = items.reduce((sum,items)=> sum + items.count,0 )
     return (
         <div className="header">
             <div className="container">
@@ -21,7 +23,7 @@ const Header = () => {
                 </div>
                 <div className="header__cart">
                     <NavLink to = "/CartEmpty" className="button button--cart">
-                        <span>520 ₽</span>
+                        <span>{totalPrice} ₽</span>
                         <div className="button__delimiter"></div>
                         <svg
                             width="18"
@@ -52,7 +54,7 @@ const Header = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>3</span>
+                        <span>{pizzaCount}</span>
                     </NavLink>
                 </div>
             </div>
