@@ -19,7 +19,6 @@ const Search = () => {
     changeInputValue(e.target.value)
   }
 
-  // dispatch(setSearchPizza(e.target.value))
   return (
     <div className={classes.root}>
       <svg className={classes.serch__icon}
