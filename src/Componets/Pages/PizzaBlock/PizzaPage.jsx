@@ -2,7 +2,7 @@ import React from 'react';
 import PizzaItem from "./PizzaItem";
 import Categories from "../../Categories";
 import Sort, {list} from "../../Sort";
-import {useNavigate, useHistory, useParams} from 'react-router-dom'
+import {useNavigate, useHistory, useParams, Link} from 'react-router-dom'
 import qs from 'qs'
 import Skeleton from "./Skeleton";
 import Pagination from '../../utils/Pagination'
@@ -81,9 +81,11 @@ const Home = () => {
         return <Skeleton
           key={i}/>
       }) : items.map((item) => {
-        return <PizzaItem
-          key={item.id}
+        return <Link key = {<item className="id"></item>}
+          to={`/pizza/${item.id}`}>
+          <PizzaItem
           {...item}/>
+        </Link>
       })}
       <Pagination
         onChangePage={handleChangePage}

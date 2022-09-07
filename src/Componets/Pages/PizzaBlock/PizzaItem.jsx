@@ -1,6 +1,7 @@
 import React from 'react';
 import {addItems} from "../../../redux/redusers/cartSilce";
 import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 
 const typePizza = ['тонкое', 'традиционное']
@@ -12,7 +13,7 @@ const PizzaItem = ({id,title, price, imageUrl, sizes, types, kye}) => {
     const [activeSize, setActiveSize] = React.useState(0)
     const dispatch = useDispatch()
     const cartItem = useSelector(state => state.cartSlice.items.find(obj => obj.id === id))
-
+    const navigate = useNavigate()
     const addedItems = cartItem ? cartItem.count : "0"
     const onClickPizzaCount = () => {
         const item = {
