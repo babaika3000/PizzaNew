@@ -1,29 +1,35 @@
-import React, {useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import {setSortId} from "../redux/redusers/filtersSliceReduer";
 import {useDispatch, useSelector} from "react-redux";
 
-export const list =  [{name:'популярности', propertyValue:'rating'},
+type SortList = {
+    name: string;
+    propertyValue: string;
+}
+
+export const list: SortList[] =  [
+    {name:'популярности', propertyValue:'rating'},
     {name:'цене', propertyValue:'price'},
     {name:'алфавиту', propertyValue:'title'},
 ]
-const Sort = () => {
+const Sort: FC = () => {
 
     const [isOpen, setIsOpen] = React.useState(false)
 
 
 
     const dispatch = useDispatch()
-    const sortId = useSelector((state) => state.filtersSlice.sort)
-    const sortRef = useRef()
+    const sortId = useSelector((state:any) => state.filtersSlice.sort)
+    const sortRef = useRef<HTMLDivElement >(null)
     // const onChangeSort = () => dispatch(setSortId)
 
-    const onClickSortName = (obj) => {
+    const onClickSortName = (obj:SortList) => {
         dispatch(setSortId(obj))
         setIsOpen(false)
     }
 
     React.useEffect(()=>{
-        const handleClick =(event)=>{
+        const handleClick =(event: any)=>{
             if(!event.path.includes(sortRef.current)){
                 setIsOpen(false)
             }
@@ -52,7 +58,7 @@ const Sort = () => {
                     {list.map((obj, i) =>(
                         <li key={i}
                             onClick={()=>onClickSortName(obj)}
-                            className={sortId.propertyValue === obj.propertyValue ? 'active' : 0 }
+                            className={sortId.propertyValue === obj.propertyValue ? 'active' : '' }
                         >{obj.name}</li>))}
                 </ul>
             </div>}

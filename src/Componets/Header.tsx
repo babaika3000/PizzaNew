@@ -1,13 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Logo from '../assets/img/pizza-logo.svg'
 import {NavLink, useLocation} from "react-router-dom";
 import Search from "./Pages/PizzaBlock/Serch/Serch";
 import {useSelector} from "react-redux";
 
 
-const Header = () => {
-    const {totalPrice, items} = useSelector((state)=> state.cartSlice)
-    const pizzaCount = items.reduce((sum,items)=> sum + items.count,0 )
+const Header: FC = () => {
+    const {totalPrice, items} = useSelector((state:any)=> state.cartSlice)
+    const pizzaCount = items.reduce((sum: number,items: any)=> sum + items.count,0 )
     const {pathname} = useLocation()
     return (
         <div className="header">
