@@ -230,6 +230,19 @@ body {
           path:first-of-type {
             display: none;
           }
+          &--disable{
+          border-color: #787878;
+            opacity: 0.3;
+            &:active{
+              transform: none;
+            }
+            &:hover {
+              background-color: transparent;
+              svg path {
+                fill: #787878;
+              }
+            }
+          }
         }
 
         &:disabled {

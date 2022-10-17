@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useRef} from 'react';
 import Logo from '../assets/img/pizza-logo.svg'
 import {NavLink, useLocation} from "react-router-dom";
 import Search from "./Pages/PizzaBlock/Serch/Serch";
@@ -9,6 +9,16 @@ const Header: FC = () => {
     const {totalPrice, items} = useSelector((state:any)=> state.cartSlice)
     const pizzaCount = items.reduce((sum: number,items: any)=> sum + items.count,0 )
     const {pathname} = useLocation()
+    const isMounted = useRef(false)
+
+    useEffect(() => {
+if(isMounted.current){
+    const json = JSON.stringify(items)
+    localStorage.setItem('cart',json)
+}
+isMounted.current = true;
+    },[items])
+
     return (
         <div className="header">
             <div className="container">

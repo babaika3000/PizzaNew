@@ -1,24 +1,24 @@
-import React from 'react';
+import React, {FC, ReactNode} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import CartPizzaItem from "../../CartPizzaItem";
-import {clearCart, removeItem} from "../../../redux/redusers/cartSilce";
+import {clearCart, removeItem} from "../../../redux/redusers/cart/slice";
 import CardEmpty from "./CartEmpty";
 
-const Cart = () => {
+const Cart: FC = () => {
 
   const dispatch = useDispatch()
-  const {totalPrice, items} = useSelector(state => state.cartSlice)
-  const pizzaCount = items.reduce((sum,items)=> sum + items.count,0 )
+  const {totalPrice, items} = useSelector((state:any) => state.cartSlice)
+  const pizzaCount = items.reduce((sum:number,items:any)=> sum + items.count,0 )
 
   const ooClickRemove =()=>{
     if(window.confirm('Удалить товар?')){
       dispatch(clearCart())
     }
   }
-
   if(!totalPrice){
-    return <CardEmpty/>
-  }
+    return <CardEmpty />;
+  };
+
   return (
     <div className="container container--cart">
           <div className="cart">
@@ -41,7 +41,7 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          { items.map((item) =>
+          { items.map((item:any) =>
             <CartPizzaItem key={item.id} {...item}/>)
           }
 

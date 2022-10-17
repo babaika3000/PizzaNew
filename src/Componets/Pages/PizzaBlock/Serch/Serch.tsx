@@ -1,24 +1,23 @@
-import React, {useRef, useState} from 'react';
+import React, {ChangeEvent, FC, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setSearchPizza} from "../../../../redux/redusers/filtersSliceReduer";
+import {setSearchPizza} from "../../../../redux/redusers/filter/slice";
 import debounce from 'lodash.debounce'
 import classes from './Serch.module.scss'
 
-const Search = () => {
+const Search:FC = () => {
   const [value, setValue] = useState('')
   const dispatch = useDispatch();
-  const inputRef = useRef()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const changeInputValue = React.useCallback(
     debounce((str) => dispatch(setSearchPizza(str)),
           1300),
       []
     )
-  const onClickInput = (e) => {
+  const onClickInput = (e:ChangeEvent<HTMLInputElement> ) => {
     setValue(e.target.value)
     changeInputValue(e.target.value)
   }
-
   return (
     <div className={classes.root}>
       <svg className={classes.serch__icon}
@@ -53,7 +52,7 @@ const Search = () => {
            onClick={() => {
              dispatch(setSearchPizza(''))
              setValue("")
-             inputRef.current.focus()
+             inputRef.current?.focus()
            }}
            xmlns="http://www.w3.org/2000/svg"
            fill="#000000" viewBox="0 0 16 16"

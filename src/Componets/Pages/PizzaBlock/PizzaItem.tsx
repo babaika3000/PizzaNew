@@ -1,42 +1,83 @@
-import React from 'react';
-import {addItems} from "../../../redux/redusers/cartSilce";
+import React, {FC} from 'react';
+import {addItems} from "../../../redux/redusers/cart/slice";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {CartItem} from "../../../redux/redusers/cart/types";
 
 
 const typePizza = ['тонкое', 'традиционное']
+type PizzaItemProps = {
+    id:string;
+    title:string;
+    price:number;
+    imageUrl:string;
+    sizes:number[];
+    types:number[];
+}
 
-
-const PizzaItem = ({id,title, price, imageUrl, sizes, types, kye}) => {
+const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types}) => {
 
     const [activeType, setActiveType] = React.useState(0)
     const [activeSize, setActiveSize] = React.useState(0)
     const dispatch = useDispatch()
-    const cartItem = useSelector(state => state.cartSlice.items.find(obj => obj.id === id))
+    const cartItem = useSelector((store:any) => store.cartSlice?.items.find((obj:any) => obj.id === id))
     const navigate = useNavigate()
     const addedItems = cartItem ? cartItem.count : "0"
     const onClickPizzaCount = () => {
-        const item = {
+        const item: CartItem = {
             id,
             title,
             price,
             imageUrl,
             size: sizes[activeSize],
-            type: typePizza[activeType]
+            type: typePizza[activeType],
+            count: 0,
         }
         dispatch(addItems(item))
 
     }
 
+    //@ts-ignore
+    function DragStartHalndler (e, item) {
+        console.log(e, item,)
+    }
+    //@ts-ignore
+    const DragSLeaveHalndler = (e) => {
+        console.log(e)
+    }
+    //@ts-ignore
+    const DrageOverHalndler = (e) => {
+        e.preventDefault();
+
+        console.log(e)
+    }
+    //@ts-ignore
+    const DropHandler = (e, item) => {
+        e.preventDefault();
+        console.log("drop",item)
+    }
+
     return (
         <div className='pizza-block__wrapper'>
             <div className="pizza-block">
+                <Link key = {id}
+                          //{<item className="id"></item>}
+                      to={`/pizza/${id}`}>
                 <img
                     className="pizza-block__image"
                     src={imageUrl}
                     alt="Pizza"
+                    draggable={true}
+                    //@ts-ignore
+                    onDragStart={(e: any, item) => DragStartHalndler(e, item)}
+                    onDragLeave={(e: any) => DragSLeaveHalndler(e)}
+                    onDrageOver={(e: any) => DrageOverHalndler(e)}
+                    //@ts-ignore
+                    onDrop={(e: any) => DropHandler(e, item)}
                 />
                 <h4 className="pizza-block__title">{title}</h4>
+                </Link>
+
                 <div className="pizza-block__selector">
                     <ul>
                         {types.map((type, i) => (
@@ -51,8 +92,7 @@ const PizzaItem = ({id,title, price, imageUrl, sizes, types, kye}) => {
                             key={i}
                             onClick={() => setActiveSize(i)}
                             className={activeSize === i ? 'active' : ''}
-                        >{item} см.</li>))
-                        }
+                        >{item} см.</li>))}
                     </ul>
                 </div>
                 <div className="pizza-block__bottom">
@@ -65,12 +105,10 @@ const PizzaItem = ({id,title, price, imageUrl, sizes, types, kye}) => {
                             height="12"
                             viewBox="0 0 12 12"
                             fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
+                            xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z"
-                                fill="white"
-                            />
+                                fill="white"/>
                         </svg>
                         <span>Добавить</span>
                         {addedItems > 0 && <i>{addedItems}</i>}

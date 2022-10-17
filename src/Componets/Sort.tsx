@@ -1,36 +1,38 @@
-import React, {FC, useRef} from 'react';
-import {setSortId} from "../redux/redusers/filtersSliceReduer";
-import {useDispatch, useSelector} from "react-redux";
+import React, {FC, useRef,memo} from 'react';
+ import {useAppDispatch} from "../redux/store";
+import {SortPropertyVale, SortType} from "../redux/redusers/filter/types";
+import {setSortId} from "../redux/redusers/filter/slice";
 
-type SortList = {
-    name: string;
-    propertyValue: string;
-}
 
-export const list: SortList[] =  [
-    {name:'популярности', propertyValue:'rating'},
-    {name:'цене', propertyValue:'price'},
-    {name:'алфавиту', propertyValue:'title'},
+export const list: SortType[] =  [
+    {name:'популярности', propertyValue:SortPropertyVale.RATING},
+    {name:'цене', propertyValue:SortPropertyVale.PRICE},
+    {name:'алфавиту', propertyValue:SortPropertyVale.TITLE},
 ]
-const Sort: FC = () => {
 
+type SortPopup = {
+    value:SortType
+}
+const Sort: FC <SortPopup> = memo(({value})=> {
     const [isOpen, setIsOpen] = React.useState(false)
 
 
 
-    const dispatch = useDispatch()
-    const sortId = useSelector((state:any) => state.filtersSlice.sort)
+    const dispatch = useAppDispatch()
     const sortRef = useRef<HTMLDivElement >(null)
     // const onChangeSort = () => dispatch(setSortId)
 
-    const onClickSortName = (obj:SortList) => {
+    const onClickSortName = (obj:SortType) => {
         dispatch(setSortId(obj))
         setIsOpen(false)
     }
 
     React.useEffect(()=>{
-        const handleClick =(event: any)=>{
-            if(!event.path.includes(sortRef.current)){
+        const handleClick =(event: MouseEvent)=>{
+            const _event = event as MouseEvent & {
+                path: Node[];
+            }
+            if(sortRef.current && !_event.path.includes(sortRef.current)){
                 setIsOpen(false)
             }
         }
@@ -51,20 +53,21 @@ const Sort: FC = () => {
                         fill="#2C2C2C"/>
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={()=>setIsOpen(!isOpen)}>{sortId.name}</span>
+                <span onClick={()=>setIsOpen(!isOpen)}>{value.name}</span>
             </div>
             { isOpen && <div className="sort__popup">
-                <ul>
-                    {list.map((obj, i) =>(
-                        <li key={i}
-                            onClick={()=>onClickSortName(obj)}
-                            className={sortId.propertyValue === obj.propertyValue ? 'active' : '' }
-                        >{obj.name}</li>))}
-                </ul>
+              <ul>
+                  {list.map((obj, i) =>(
+                      <li key={i}
+                          onClick={()=>onClickSortName(obj)}
+                          className={value.propertyValue === obj.propertyValue ? 'active' : '' }
+                      >{obj.name}</li>))}
+              </ul>
             </div>}
 
         </div>
     );
-};
+})
+
 
 export default Sort;

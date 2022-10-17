@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-const NotFound = ()=> {
+const NotFound: FC = ()=> {
     return (
         <h1>
             Страница не найдена <br/>:(

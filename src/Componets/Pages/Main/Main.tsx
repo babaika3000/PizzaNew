@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Header from "../../Header";
 import {Outlet} from "react-router-dom";
 
 
-function Main (){
+const Main: FC = () =>{
     return (
       <div className="App">
         <div className="wrapper">
