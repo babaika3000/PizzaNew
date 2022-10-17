@@ -11,6 +11,7 @@ import {setPageCount, setFilters,} from "../../../redux/redusers/filter/slice";
 import {useAppDispatch} from "../../../redux/store";
 import {SearchPizzaItems} from "../../../redux/redusers/pizza/types";
 import {fetchPizza} from "../../../redux/redusers/pizza/asincAction";
+import {calcTotalPrice} from "../../../utils/calcTotalPrice";
 
 
 const Home: FC = () => {
@@ -71,25 +72,25 @@ const Home: FC = () => {
         window.scrollTo(0, 0)
     }, [categoriesId, sortId.propertyValue, searchPizza, pageCount])
 
-    // //@ts-ignore
-    // function DragStartHalndler (e, item) {
-    //     console.log(e, item,)
-    // }
-    // //@ts-ignore
-    // const DragSLeaveHalndler = (e) => {
-    //     console.log(e)
-    // }
-    // //@ts-ignore
-    // const DrageOverHalndler = (e) => {
-    //     e.preventDefault();
-    //
-    //     console.log(e)
-    // }
-    // //@ts-ignore
-    // const DropHandler = (e, item) => {
-    //     e.preventDefault();
-    //     console.log("drop",item)
-    // }
+    //@ts-ignore
+    function DragStartHalndler (e, item) {
+        console.log(e, item,)
+    }
+    //@ts-ignore
+    const DragSLeaveHalndler = (e) => {
+        console.log(e)
+    }
+    //@ts-ignore
+    const DrageOverHalndler = (e) => {
+        e.preventDefault();
+
+        console.log(e)
+    }
+    //@ts-ignore
+    const DropHandler = (e, item) => {
+        e.preventDefault();
+        calcTotalPrice(item)
+    }
 
 
     const FakeArray = [...Array(6)]
@@ -104,18 +105,22 @@ const Home: FC = () => {
                         return <Skeleton
                             key={i}/>
                     }) : items.map((item: any) => {
-                        // draggable={true}
-                        // //@ts-ignore
-                        // onDragStart={(e: any, item) => DragStartHalndler(e, item)}
-                        // onDragLeave={(e: any) => DragSLeaveHalndler(e)}
-                        // onDrageOver={(e: any) => DrageOverHalndler(e)}
-                        // //@ts-ignore
-                        // onDrop={(e: any) => DropHandler(e, item)}
-                        return <PizzaItem
 
+                        return <div
+                            className='pizza-block__wrapper'
+                            draggable={true}
+                            //@ts-ignore
+                            onDragStart={(e: any, item) => DragStartHalndler(e, item)}
+                            onDragLeave={(e: any) => DragSLeaveHalndler(e)}
+                            onDrageOver={(e: any) => DrageOverHalndler(e)}
+                            //@ts-ignore
+                            onDrop={(e: any) => DropHandler(e, item)}
+                        >
+                        <PizzaItem
                             key={item.id}
-                            {...item}>
-                        </PizzaItem>
+                            {...item}
+                    />
+                        </div>
                     })}
             <Pagination
                 onChangePage={handleChangePage}

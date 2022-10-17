@@ -37,28 +37,9 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
 
     }
 
-    //@ts-ignore
-    function DragStartHalndler (e, item) {
-        console.log(e, item,)
-    }
-    //@ts-ignore
-    const DragSLeaveHalndler = (e) => {
-        console.log(e)
-    }
-    //@ts-ignore
-    const DrageOverHalndler = (e) => {
-        e.preventDefault();
-
-        console.log(e)
-    }
-    //@ts-ignore
-    const DropHandler = (e, item) => {
-        e.preventDefault();
-        console.log("drop",item)
-    }
 
     return (
-        <div className='pizza-block__wrapper'>
+        <>
             <div className="pizza-block">
                 <Link key = {id}
                           //{<item className="id"></item>}
@@ -67,13 +48,6 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
                     className="pizza-block__image"
                     src={imageUrl}
                     alt="Pizza"
-                    draggable={true}
-                    //@ts-ignore
-                    onDragStart={(e: any, item) => DragStartHalndler(e, item)}
-                    onDragLeave={(e: any) => DragSLeaveHalndler(e)}
-                    onDrageOver={(e: any) => DrageOverHalndler(e)}
-                    //@ts-ignore
-                    onDrop={(e: any) => DropHandler(e, item)}
                 />
                 <h4 className="pizza-block__title">{title}</h4>
                 </Link>
@@ -115,8 +89,7 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
                     </button>
                 </div>
             </div>
-
-        </div>
+        </>
 
     );
 };
