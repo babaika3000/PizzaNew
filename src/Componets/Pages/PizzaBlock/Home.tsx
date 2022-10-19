@@ -11,9 +11,10 @@ import {setPageCount, setFilters,} from "../../../redux/redusers/filter/slice";
 import {useAppDispatch} from "../../../redux/store";
 import {SearchPizzaItems} from "../../../redux/redusers/pizza/types";
 import {fetchPizza} from "../../../redux/redusers/pizza/asincAction";
+import { useDrag } from 'react-dnd'
 import {calcTotalPrice} from "../../../utils/calcTotalPrice";
 
-
+//@ts-ignore
 const Home: FC = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
@@ -72,25 +73,29 @@ const Home: FC = () => {
         window.scrollTo(0, 0)
     }, [categoriesId, sortId.propertyValue, searchPizza, pageCount])
 
-    //@ts-ignore
-    function DragStartHalndler (e, item) {
-        console.log(e, item,)
-    }
-    //@ts-ignore
-    const DragSLeaveHalndler = (e) => {
-        console.log(e)
-    }
-    //@ts-ignore
-    const DrageOverHalndler = (e) => {
-        e.preventDefault();
+    // //@ts-ignore
+    // function DragStartHalndler (e, item) {
+    //     console.log(e, item,)
+    // }
+    // //@ts-ignore
+    // const DragSLeaveHalndler = (e) => {
+    //     console.log(e)
+    // }
+    // //@ts-ignore
+    // const DrageOverHalndler = (e) => {
+    //     e.preventDefault();
+    //
+    //     console.log(e)
+    // }
+    // //@ts-ignore
+    // const DropHandler = (e, item) => {
+    //     e.preventDefault();
+    //     calcTotalPrice(item)
+    // }
 
-        console.log(e)
-    }
-    //@ts-ignore
-    const DropHandler = (e, item) => {
-        e.preventDefault();
-        calcTotalPrice(item)
-    }
+
+
+
 
 
     const FakeArray = [...Array(6)]
@@ -105,17 +110,8 @@ const Home: FC = () => {
                         return <Skeleton
                             key={i}/>
                     }) : items.map((item: any) => {
-
-                        return <div
-                            className='pizza-block__wrapper'
-                            draggable={true}
-                            //@ts-ignore
-                            onDragStart={(e: any, item) => DragStartHalndler(e, item)}
-                            onDragLeave={(e: any) => DragSLeaveHalndler(e)}
-                            onDrageOver={(e: any) => DrageOverHalndler(e)}
-                            //@ts-ignore
-                            onDrop={(e: any) => DropHandler(e, item)}
-                        >
+                        //@ts-ignore
+                        return <div className='pizza-block__wrapper'>
                         <PizzaItem
                             key={item.id}
                             {...item}
@@ -131,3 +127,4 @@ const Home: FC = () => {
 }
 
 export default Home;
+

@@ -3,7 +3,7 @@ import {addItems} from "../../../redux/redusers/cart/slice";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {CartItem} from "../../../redux/redusers/cart/types";
-
+import {useDrag} from "react-dnd";
 
 const typePizza = ['тонкое', 'традиционное']
 type PizzaItemProps = {
@@ -34,19 +34,36 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
             count: 0,
         }
         dispatch(addItems(item))
-
     }
-
+    const [{isDragging}, drag] = useDrag(()=>({
+        type:'pizza',
+        //@ts-ignore
+        item:{item = {
+                id,
+                title,
+                price,
+                imageUrl,
+                size: sizes[activeSize],
+                type: typePizza[activeType],
+                count: 0,
+            }},
+        collect: (monitor) =>({
+            isDragging: !!monitor.isDragging()
+        } )
+    }))
 
     return (
         <>
             <div className="pizza-block">
+
                 <Link key = {id}
                           //{<item className="id"></item>}
                       to={`/pizza/${id}`}>
                 <img
+                    ref={drag}
                     className="pizza-block__image"
                     src={imageUrl}
+                    style={{border: isDragging ? "5px solid black" : "0px" , borderRadius: 130}}
                     alt="Pizza"
                 />
                 <h4 className="pizza-block__title">{title}</h4>
