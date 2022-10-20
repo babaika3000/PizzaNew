@@ -8,10 +8,13 @@ import {calcTotalPrice} from "../utils/calcTotalPrice";
 import {addItems} from "../redux/redusers/cart/slice";
 import {CartItem} from "../redux/redusers/cart/types";
 import {useAppDispatch} from "../redux/store";
+//@ts-ignore
 
+export const typePizza = ['тонкое', 'традиционное']
 
+//@ts-ignore
 const Header: FC = () => {
-    const {totalPrice, items, id} = useSelector((state: any) => state.cartSlice)
+    const {totalPrice, items, } = useSelector((state: any) => state.cartSlice)
     // const pizzaCount = calcTotalPrice(items)
     const pizzaCount = items.reduce((sum: number, items: any) => sum + items.count, 0)
     const {pathname} = useLocation()
@@ -25,33 +28,23 @@ const Header: FC = () => {
         isMounted.current = true;
     }, [items])
 //@ts-ignore
+
+
+
     const [{isOver}, drop] = useDrop(() => ({
         accept: "pizza",
         //@ts-ignore
-        drop: (item: CartItem) => onClickPizzaCount(...item),
+        drop: (item: CartItem) => onClickPizzaCount(item),
         collect: (monitor) => ({
             isOver: !!monitor.isOver()
         })
     }))
-    const onClickPizzaCount = () => {
-        //@ts-ignore
-        const onClickPizzaCount = () => {
-            const item: CartItem = {
-                id,
-                title,
-                price,
-                imageUrl,
-                size: sizes[activeSize],
-                type: typePizza[activeType],
-                count: 0,
-            }
+
+
+    const onClickPizzaCount = (item:CartItem) => {
+
             dispatch(addItems(item))
-
         }
-        }
-        dispatch(addItems(item))
-
-    }
 
 
     return (

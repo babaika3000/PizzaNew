@@ -5,14 +5,14 @@ import {Link, useNavigate} from "react-router-dom";
 import {CartItem} from "../../../redux/redusers/cart/types";
 import {useDrag} from "react-dnd";
 
-const typePizza = ['тонкое', 'традиционное']
-type PizzaItemProps = {
+export const typePizza = ['тонкое', 'традиционное']
+export type PizzaItemProps = {
     id:string;
     title:string;
     price:number;
     imageUrl:string;
     sizes:number[];
-    types:number[];
+    types?:number[];
 }
 
 const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types}) => {
@@ -23,30 +23,24 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
     const cartItem = useSelector((store:any) => store.cartSlice?.items.find((obj:any) => obj.id === id))
     const navigate = useNavigate()
     const addedItems = cartItem ? cartItem.count : "0"
+
+    const item: CartItem = {
+        id,
+        title,
+        price,
+        imageUrl,
+        size: sizes[activeSize],
+        type: typePizza[activeType],
+        count: 0,
+    }
+
     const onClickPizzaCount = () => {
-        const item: CartItem = {
-            id,
-            title,
-            price,
-            imageUrl,
-            size: sizes[activeSize],
-            type: typePizza[activeType],
-            count: 0,
-        }
+
         dispatch(addItems(item))
     }
     const [{isDragging}, drag] = useDrag(()=>({
         type:'pizza',
-        //@ts-ignore
-        item:{item = {
-                id,
-                title,
-                price,
-                imageUrl,
-                size: sizes[activeSize],
-                type: typePizza[activeType],
-                count: 0,
-            }},
+        item:{item:item},
         collect: (monitor) =>({
             isDragging: !!monitor.isDragging()
         } )
@@ -71,7 +65,7 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
 
                 <div className="pizza-block__selector">
                     <ul>
-                        {types.map((type, i) => (
+                        {types?.map((type, i) => (
                             <li key={i}
                                 className={activeType === i ? 'active' : ''}
                                 onClick={() => setActiveType(i)}
