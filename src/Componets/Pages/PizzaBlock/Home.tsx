@@ -115,6 +115,7 @@ const Home: FC = () => {
                         <PizzaItem
                             key={item.id}
                             {...item}
+
                     />
                         </div>
                     })}

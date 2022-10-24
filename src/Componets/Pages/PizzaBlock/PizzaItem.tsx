@@ -33,14 +33,13 @@ const PizzaItem:FC<PizzaItemProps> = ({id,title, price, imageUrl, sizes, types})
         type: typePizza[activeType],
         count: 0,
     }
-
     const onClickPizzaCount = () => {
 
         dispatch(addItems(item))
     }
     const [{isDragging}, drag] = useDrag(()=>({
         type:'pizza',
-        item:{item:item},
+        item,
         collect: (monitor) =>({
             isDragging: !!monitor.isDragging()
         } )

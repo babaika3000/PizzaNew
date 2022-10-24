@@ -35,6 +35,8 @@ const Header: FC = () => {
         accept: "pizza",
         //@ts-ignore
         drop: (item: CartItem) => onClickPizzaCount(item),
+        // drop: (item: CartItem) =>console.log('@@@@item', item)
+        // console.log('@@@@', /);,
         collect: (monitor) => ({
             isOver: !!monitor.isOver()
         })
